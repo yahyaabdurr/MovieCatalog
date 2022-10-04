@@ -1,67 +1,69 @@
 import 'package:ditonton/data/models/genre_model.dart';
 import 'package:ditonton/data/models/seasons_model.dart';
+import 'package:ditonton/domain/entities/tv_detail.dart';
 
 class TvSeriesDetailResponse {
   TvSeriesDetailResponse({
-    required this.adult,
-    required this.backdropPath,
-    required this.episodeRunTime,
-    required this.firstAirDate,
+    this.adult,
+    this.backdropPath,
+    this.episodeRunTime,
+    this.firstAirDate,
     required this.genres,
-    required this.homepage,
+    this.homepage,
     required this.id,
-    required this.inProduction,
-    required this.languages,
-    required this.lastAirDate,
+    this.inProduction,
+    this.languages,
+    this.lastAirDate,
     required this.name,
-    required this.numberOfEpisodes,
-    required this.numberOfSeasons,
-    required this.originCountry,
-    required this.originalLanguage,
-    required this.originalName,
+    this.numberOfEpisodes,
+    this.numberOfSeasons,
+    this.originCountry,
+    this.originalLanguage,
+    this.originalName,
     required this.overview,
-    required this.popularity,
-    required this.posterPath,
-    required this.seasons,
-    required this.status,
-    required this.type,
+    this.popularity,
+    this.posterPath,
+    this.seasons,
+    this.status,
+    this.type,
     required this.voteAverage,
-    required this.voteCount,
+    this.voteCount,
   });
-  final bool adult;
-  final String backdropPath;
-
-  final List<int> episodeRunTime;
-  final String firstAirDate;
+  final bool? adult;
+  final String? backdropPath;
+  final List<int>? episodeRunTime;
+  final String? firstAirDate;
   final List<GenreModel> genres;
-  final String homepage;
+  final String? homepage;
   final int id;
-  final bool inProduction;
-  final List<String> languages;
-  final String lastAirDate;
+  final bool? inProduction;
+  final List<String>? languages;
+  final String? lastAirDate;
   final String name;
-  final int numberOfEpisodes;
-  final int numberOfSeasons;
-  final List<String> originCountry;
-  final String originalLanguage;
-  final String originalName;
+  final int? numberOfEpisodes;
+  final int? numberOfSeasons;
+  final List<String>? originCountry;
+  final String? originalLanguage;
+  final String? originalName;
   final String overview;
-  final double popularity;
-  final String posterPath;
-  final List<SeasonsModel> seasons;
-  final String status;
-  final String type;
+  final double? popularity;
+  final String? posterPath;
+  final List<SeasonsModel>? seasons;
+  final String? status;
+  final String? type;
   final double voteAverage;
-  final int voteCount;
+  final int? voteCount;
 
   factory TvSeriesDetailResponse.fromJson(Map<String, dynamic> json) =>
       TvSeriesDetailResponse(
         adult: json['adult'],
         backdropPath: json['backdrop_path'],
-        episodeRunTime: List<int>.from(json["episode_run_time"].map((x) => x)),
+        episodeRunTime: json["episode_run_time"] != null
+            ? List<int>.from(json["episode_run_time"].map((x) => x))
+            : null,
         firstAirDate: json['first_air_date'],
         homepage: json['homepage'],
-        id: json['id'],
+        id: json['id'] ?? 0,
         inProduction: json['in_production'],
         genres: List<GenreModel>.from(
             json["genres"].map((x) => GenreModel.fromJson(x))),
@@ -78,6 +80,7 @@ class TvSeriesDetailResponse {
         posterPath: json['poster_path'],
         seasons: List.from(json['seasons'])
             .map((e) => SeasonsModel.fromJson(e))
+            .where((element) => element.posterPath != null)
             .toList(),
         status: json['status'],
         type: json['type'],
@@ -111,5 +114,34 @@ class TvSeriesDetailResponse {
     _data['vote_average'] = voteAverage;
     _data['vote_count'] = voteCount;
     return _data;
+  }
+
+  TvDetail toEntity() {
+    return TvDetail(
+      adult: this.adult,
+      backdropPath: this.backdropPath,
+      genres: this.genres.map((genre) => genre.toEntity()).toList(),
+      id: this.id,
+      type: this.type,
+      originalName: this.originalName,
+      seasons: this.seasons?.map((season) => season.toEntity()).toList(),
+      languages: this.languages,
+      popularity: this.popularity,
+      overview: this.overview,
+      posterPath: this.posterPath,
+      voteAverage: this.voteAverage,
+      voteCount: this.voteCount,
+      homepage: this.homepage,
+      name: this.name,
+      originalLanguage: this.originalLanguage,
+      firstAirDate: this.firstAirDate,
+      episodeRunTime: this.episodeRunTime,
+      status: this.status,
+      numberOfEpisodes: this.numberOfEpisodes,
+      numberOfSeasons: this.numberOfSeasons,
+      lastAirDate: this.lastAirDate,
+      originCountry: this.originCountry,
+      inProduction: this.inProduction,
+    );
   }
 }

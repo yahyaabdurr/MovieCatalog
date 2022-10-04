@@ -6,6 +6,7 @@ import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class TvDetailPage extends StatefulWidget {
@@ -19,6 +20,18 @@ class TvDetailPage extends StatefulWidget {
 }
 
 class _TvDetailPageState extends State<TvDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      Provider.of<TvDetailNotifier>(context, listen: false)
+          .fetchTvMovieDetail(widget.id);
+      Provider.of<TvDetailNotifier>(context, listen: false)
+          .loadWatchlistTvStatus(widget.id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,33 +103,31 @@ class DetailContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              tvDetail.title,
+                              tvDetail.name,
                               style: kHeading5,
                             ),
                             ElevatedButton(
                               onPressed: () async {
                                 if (!isAddedWatchlist) {
-                                  await Provider.of<MovieDetailNotifier>(
-                                          context,
+                                  await Provider.of<TvDetailNotifier>(context,
                                           listen: false)
                                       .addWatchlist(tvDetail);
                                 } else {
-                                  await Provider.of<MovieDetailNotifier>(
-                                          context,
+                                  await Provider.of<TvDetailNotifier>(context,
                                           listen: false)
                                       .removeFromWatchlist(tvDetail);
                                 }
 
-                                final message =
-                                    Provider.of<MovieDetailNotifier>(context,
-                                            listen: false)
-                                        .watchlistMessage;
+                                final message = Provider.of<TvDetailNotifier>(
+                                        context,
+                                        listen: false)
+                                    .watchlistMessage;
 
                                 if (message ==
-                                        MovieDetailNotifier
+                                        TvDetailNotifier
                                             .watchlistAddSuccessMessage ||
                                     message ==
-                                        MovieDetailNotifier
+                                        TvDetailNotifier
                                             .watchlistRemoveSuccessMessage) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(message)));
@@ -142,9 +153,6 @@ class DetailContent extends StatelessWidget {
                             ),
                             Text(
                               _showGenres(tvDetail.genres),
-                            ),
-                            Text(
-                              _showDuration(tvDetail.runtime),
                             ),
                             Row(
                               children: [
