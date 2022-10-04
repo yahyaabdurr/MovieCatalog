@@ -6,7 +6,6 @@ import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/data/models/movie_table.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/domain/repositories/movie_repository.dart';
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/common/failure.dart';
@@ -19,18 +18,6 @@ class MovieRepositoryImpl implements MovieRepository {
     required this.remoteDataSource,
     required this.localDataSource,
   });
-
-  @override
-  Future<Either<Failure, List<TvSeries>>> getTvSeriesMovies() async {
-    try {
-      final result = await remoteDataSource.getTvSeriesMovies();
-      return Right(result.map((model) => model.toEntity()).toList());
-    } on ServerException {
-      return Left(ServerFailure(''));
-    } on SocketException {
-      return Left(ConnectionFailure('Failed to connect to the network'));
-    }
-  }
 
   @override
   Future<Either<Failure, List<Movie>>> getNowPlayingMovies() async {

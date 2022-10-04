@@ -4,56 +4,56 @@ import 'package:equatable/equatable.dart';
 
 class TvDetail extends Equatable {
   TvDetail({
-    required this.adult,
-    required this.backdropPath,
-    required this.episodeRunTime,
-    required this.firstAirDate,
+    this.adult,
+    this.backdropPath,
+    this.episodeRunTime,
+    this.firstAirDate,
     required this.genres,
-    required this.homepage,
+    this.homepage,
     required this.id,
-    required this.inProduction,
-    required this.languages,
-    required this.lastAirDate,
+    this.inProduction,
+    this.languages,
+    this.lastAirDate,
     required this.name,
-    required this.numberOfEpisodes,
-    required this.numberOfSeasons,
-    required this.originCountry,
-    required this.originalLanguage,
-    required this.originalName,
+    this.numberOfEpisodes,
+    this.numberOfSeasons,
+    this.originCountry,
+    this.originalLanguage,
+    this.originalName,
     required this.overview,
-    required this.popularity,
-    required this.posterPath,
-    required this.seasons,
-    required this.status,
-    required this.type,
+    this.popularity,
+    this.posterPath,
+    this.seasons,
+    this.status,
+    this.type,
     required this.voteAverage,
-    required this.voteCount,
+    this.voteCount,
   });
 
-  final bool adult;
-  final String backdropPath;
-  final List<int> episodeRunTime;
-  final String firstAirDate;
+  final bool? adult;
+  final String? backdropPath;
+  final List<int>? episodeRunTime;
+  final String? firstAirDate;
   final List<Genre> genres;
-  final String homepage;
+  final String? homepage;
   final int id;
-  final bool inProduction;
-  final List<String> languages;
-  final String lastAirDate;
+  final bool? inProduction;
+  final List<String>? languages;
+  final String? lastAirDate;
   final String name;
-  final int numberOfEpisodes;
-  final int numberOfSeasons;
-  final List<String> originCountry;
-  final String originalLanguage;
-  final String originalName;
+  final int? numberOfEpisodes;
+  final int? numberOfSeasons;
+  final List<String>? originCountry;
+  final String? originalLanguage;
+  final String? originalName;
   final String overview;
-  final double popularity;
-  final String posterPath;
-  final List<Season> seasons;
-  final String status;
-  final String type;
+  final double? popularity;
+  final String? posterPath;
+  final List<Season>? seasons;
+  final String? status;
+  final String? type;
   final double voteAverage;
-  final int voteCount;
+  final int? voteCount;
 
   @override
   List<Object?> get props => [
