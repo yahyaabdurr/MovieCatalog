@@ -1,8 +1,9 @@
 import 'package:ditonton/data/models/genre_model.dart';
 import 'package:ditonton/data/models/seasons_model.dart';
 import 'package:ditonton/domain/entities/tv_detail.dart';
+import 'package:equatable/equatable.dart';
 
-class TvSeriesDetailResponse {
+class TvSeriesDetailResponse extends Equatable {
   TvSeriesDetailResponse({
     this.adult,
     this.backdropPath,
@@ -144,4 +145,32 @@ class TvSeriesDetailResponse {
       inProduction: this.inProduction,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        adult,
+        backdropPath,
+        episodeRunTime,
+        firstAirDate,
+        genres,
+        homepage,
+        id,
+        inProduction,
+        languages,
+        lastAirDate,
+        name,
+        numberOfEpisodes,
+        numberOfSeasons,
+        originCountry,
+        originalLanguage,
+        originalName,
+        overview,
+        popularity,
+        posterPath,
+        seasons,
+        status,
+        type,
+        voteAverage,
+        voteCount,
+      ];
 }

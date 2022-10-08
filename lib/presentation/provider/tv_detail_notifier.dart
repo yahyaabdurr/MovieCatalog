@@ -4,7 +4,6 @@ import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/usecases/get_tv_movie_detail.dart';
 import 'package:ditonton/domain/usecases/get_tv_movie_recommendations.dart';
 import 'package:ditonton/domain/usecases/get_tv_watchlist_status.dart';
-import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
 import 'package:ditonton/domain/usecases/remove_tv_watchlist.dart';
 import 'package:ditonton/domain/usecases/save_tv_watchlist.dart';
 import 'package:flutter/foundation.dart';
@@ -92,7 +91,7 @@ class TvDetailNotifier extends ChangeNotifier {
       },
     );
 
-    await loadWatchlistTvStatus(movie.id);
+    await loadWatchlistTvStatus(tvMovie.id);
   }
 
   Future<void> removeFromWatchlist(TvDetail tvMovie) async {
@@ -107,7 +106,7 @@ class TvDetailNotifier extends ChangeNotifier {
       },
     );
 
-    await loadWatchlistTvStatus(movie.id);
+    await loadWatchlistTvStatus(tvMovie.id);
   }
 
   Future<void> loadWatchlistTvStatus(int id) async {

@@ -60,7 +60,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   Future<String> insertWatchlistTv(TvTable movie) async {
     try {
       await databaseHelper.insertWatchlistTv(movie);
-      return 'Added to Watchlist';
+      return 'Added Tv Series to Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
     }

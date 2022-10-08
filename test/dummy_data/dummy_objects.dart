@@ -1,7 +1,11 @@
 import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/tv_table.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/season.dart';
+import 'package:ditonton/domain/entities/tv_detail.dart';
+import 'package:ditonton/domain/entities/tv_series.dart';
 
 final testMovie = Movie(
   adult: false,
@@ -37,9 +41,60 @@ final testMovieDetail = MovieDetail(
   voteCount: 1,
 );
 
+final testTvSeries = TvSeries(
+  originalLanguage: 'id',
+  originCountry: ['a', 'b', 'c'],
+  firstAirDate: 'firstAirdDate',
+  originalName: 'originalName',
+  backdropPath: 'backdropPath',
+  genreIds: [1, 2, 3],
+  id: 1,
+  overview: 'overview',
+  popularity: 1,
+  posterPath: 'posterPath',
+  name: 'name',
+  voteAverage: 1,
+  voteCount: 1,
+);
+
+final testTvSeriesDetail = TvDetail(
+  originalLanguage: 'id',
+  originCountry: ['a', 'b', 'c'],
+  firstAirDate: 'firstAirdDate',
+  originalName: 'originalName',
+  backdropPath: 'backdropPath',
+  genres: [Genre(id: 1, name: 'Action')],
+  id: 1,
+  overview: 'overview',
+  popularity: 1,
+  posterPath: 'posterPath',
+  name: 'name',
+  voteAverage: 1,
+  voteCount: 1,
+  seasons: [
+    Season(
+        posterPath: 'posterPath',
+        airDate: '2022-01-01',
+        episodeCount: 1,
+        id: 1,
+        name: 'name',
+        overview: 'overview',
+        seasonNumber: 1)
+  ],
+);
+
+final testTvSeriesList = [testTvSeries];
+
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
   title: 'title',
+  posterPath: 'posterPath',
+  overview: 'overview',
+);
+
+final testTvWatchlistMovie = TvSeries.watchlist(
+  id: 1,
+  name: 'name',
   posterPath: 'posterPath',
   overview: 'overview',
 );
@@ -56,4 +111,18 @@ final testMovieMap = {
   'overview': 'overview',
   'posterPath': 'posterPath',
   'title': 'title',
+};
+
+final testTvTable = TvTable(
+  id: 1,
+  name: 'name',
+  posterPath: 'posterPath',
+  overview: 'overview',
+);
+
+final testTvSeriesMap = {
+  'id': 1,
+  'overview': 'overview',
+  'posterPath': 'posterPath',
+  'name': 'name',
 };
