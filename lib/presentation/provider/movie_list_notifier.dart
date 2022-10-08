@@ -4,6 +4,7 @@ import 'package:ditonton/domain/usecases/get_now_playing_movies.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/usecases/get_popular_movies.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_movies.dart';
+import 'package:ditonton/domain/usecases/get_tv_popular_movies.dart';
 import 'package:ditonton/domain/usecases/get_tv_series_movies.dart';
 import 'package:flutter/material.dart';
 
@@ -32,20 +33,27 @@ class MovieListNotifier extends ChangeNotifier {
   RequestState _tvSeriesMoviesState = RequestState.Empty;
   RequestState get tvSeriesMoviesState => _tvSeriesMoviesState;
 
+  var _tvSeriesPopularMovies = <TvSeries>[];
+  List<TvSeries> get tvSeriesPopularMovies => _tvSeriesPopularMovies;
+
+  RequestState _tvSeriesPopularMoviesState = RequestState.Empty;
+  RequestState get tvSeriesPopularMoviesState => _tvSeriesPopularMoviesState;
+
   String _message = '';
   String get message => _message;
 
-  MovieListNotifier({
-    required this.getNowPlayingMovies,
-    required this.getPopularMovies,
-    required this.getTopRatedMovies,
-    required this.getTvSeriesMovies,
-  });
+  MovieListNotifier(
+      {required this.getNowPlayingMovies,
+      required this.getPopularMovies,
+      required this.getTopRatedMovies,
+      required this.getTvSeriesMovies,
+      required this.getTvPopularMovies});
 
   final GetNowPlayingMovies getNowPlayingMovies;
   final GetPopularMovies getPopularMovies;
   final GetTopRatedMovies getTopRatedMovies;
   final GetTvSeriesMovies getTvSeriesMovies;
+  final GetTvPopularMovies getTvPopularMovies;
 
   Future<void> fetchTvSeriesMovies() async {
     _tvSeriesMoviesState = RequestState.Loading;
@@ -61,6 +69,25 @@ class MovieListNotifier extends ChangeNotifier {
       (moviesData) {
         _tvSeriesMoviesState = RequestState.Loaded;
         _tvSeriesMovies = moviesData;
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> fetchTvPopularMovies() async {
+    _tvSeriesPopularMoviesState = RequestState.Loading;
+    notifyListeners();
+
+    final result = await getTvPopularMovies.execute();
+    result.fold(
+      (failure) {
+        _tvSeriesPopularMoviesState = RequestState.Error;
+        _message = failure.message;
+        notifyListeners();
+      },
+      (moviesData) {
+        _tvSeriesPopularMoviesState = RequestState.Loaded;
+        _tvSeriesPopularMovies = moviesData;
         notifyListeners();
       },
     );

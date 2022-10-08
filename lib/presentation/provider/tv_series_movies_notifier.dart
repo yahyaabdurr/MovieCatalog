@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 class TvSeriesMoviesNotifier extends ChangeNotifier {
   final GetTvSeriesMovies getTvSeriesMovies;
 
-  TvSeriesMoviesNotifier({required this.getTvSeriesMovies});
+  TvSeriesMoviesNotifier(this.getTvSeriesMovies);
 
   RequestState _state = RequestState.Empty;
   RequestState get state => _state;

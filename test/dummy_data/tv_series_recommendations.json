@@ -1,0 +1,30 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/FbUIi5WeDU5j1EtipQ274tts1E.jpg",
+            "id": 197352,
+            "name": "Bravo, My Life",
+            "original_language": "ko",
+            "original_name": "",
+            "overview": "Even though Seo Dong Hee comes from a poor family background, she has a bright and positive personality. She dreams of becoming a designer and slowly works her way to achieve her dream. She decides to become the mother of her nephew and raise him by herself. She also gets involved with Kang Cha Yeol. Kang Cha Yeol’s father runs a big company. His father wants him to work for his company, but Kang Cha Yeol doesn't want to. He wants to go back to the U.S., but he realizes he can't do anything without his father's financial support. His father tells Kang Cha Yeol to work for 1 year at his company.",
+            "poster_path": "/3ehMAk8E9zETA9r2ZydwVrgUoP3.jpg",
+            "media_type": "tv",
+            "genre_ids": [
+                35,
+                18,
+                10751
+            ],
+            "popularity": 25.025,
+            "first_air_date": "2022-04-11",
+            "vote_average": 7.0,
+            "vote_count": 3,
+            "origin_country": [
+                "KR"
+            ]
+        }
+    ],
+    "total_pages": 2,
+    "total_results": 40
+}
