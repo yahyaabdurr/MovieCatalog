@@ -44,6 +44,18 @@ class TvRepositoryImpl implements TvRepository {
   }
 
   @override
+  Future<Either<Failure, List<TvSeries>>> getTvTopRatedMovies() async {
+    try {
+      final result = await remoteDataSource.getTvTopRatedMovies();
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
   Future<Either<Failure, TvDetail>> getTvMovieDetail(int id) async {
     try {
       final result = await remoteDataSource.getTvSeriesDetail(id);

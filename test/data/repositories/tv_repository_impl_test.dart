@@ -10,7 +10,6 @@ import 'package:ditonton/data/models/tv_series_detail_model.dart';
 import 'package:ditonton/data/models/tv_series_model.dart';
 import 'package:ditonton/data/repositories/tv_repository_impl.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -212,6 +211,47 @@ void main() {
           .thenThrow(SocketException('Failed to connect to the network'));
       // act
       final result = await repository.getTvPopularMovies();
+      // assert
+      expect(
+          result, Left(ConnectionFailure('Failed to connect to the network')));
+    });
+  });
+
+  group('Top Rated Tv Series  Movies', () {
+    test(
+        'should return top rated tv series list when call to data source is success',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getTvTopRatedMovies())
+          .thenAnswer((_) async => tvSeriesModelList);
+      // act
+      final result = await repository.getTvTopRatedMovies();
+      // assert
+      /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
+      final resultList = result.getOrElse(() => []);
+      expect(resultList, tvSeriesMovieList);
+    });
+
+    test(
+        'should return server failure when call to data source is unsuccessful',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getTvTopRatedMovies())
+          .thenThrow(ServerException());
+      // act
+      final result = await repository.getTvTopRatedMovies();
+      // assert
+      expect(result, Left(ServerFailure('')));
+    });
+
+    test(
+        'should return connection failure when device is not connected to the internet',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getTvTopRatedMovies())
+          .thenThrow(SocketException('Failed to connect to the network'));
+      // act
+      final result = await repository.getTvTopRatedMovies();
       // assert
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));

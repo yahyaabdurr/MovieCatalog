@@ -20,6 +20,7 @@ abstract class MovieRemoteDataSource {
 
   Future<List<TvSeriesModel>> getTvSeriesMovies();
   Future<List<TvSeriesModel>> getTvPopularMovies();
+  Future<List<TvSeriesModel>> getTvTopRatedMovies();
   Future<TvSeriesDetailResponse> getTvSeriesDetail(int id);
   Future<List<TvSeriesModel>> getTvMovieRecommendations(int id);
   Future<List<TvSeriesModel>> searchTvMovies(String query);
@@ -123,6 +124,18 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   Future<List<TvSeriesModel>> getTvPopularMovies() async {
     final response =
         await client.get(Uri.parse('$BASE_URL/$TV/popular?$API_KEY'));
+
+    if (response.statusCode == 200) {
+      return TvSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<TvSeriesModel>> getTvTopRatedMovies() async {
+    final response =
+        await client.get(Uri.parse('$BASE_URL/$TV/top_rated?$API_KEY'));
 
     if (response.statusCode == 200) {
       return TvSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;

@@ -33,9 +33,12 @@ import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_popular_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series_movies_notifier.dart';
+import 'package:ditonton/presentation/provider/tv_top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
+
+import 'domain/usecases/get_tv_top_rated_movies.dart';
 
 final locator = GetIt.instance;
 
@@ -47,7 +50,8 @@ void init() {
         getPopularMovies: locator(),
         getTopRatedMovies: locator(),
         getTvSeriesMovies: locator(),
-        getTvPopularMovies: locator()),
+        getTvPopularMovies: locator(),
+        getTvTopRatedMovies: locator()),
   );
   locator.registerFactory(
     () => MovieDetailNotifier(
@@ -86,6 +90,12 @@ void init() {
   );
 
   locator.registerFactory(
+    () => TvTopRatedMoviesNotifier(
+      locator(),
+    ),
+  );
+
+  locator.registerFactory(
     () => PopularMoviesNotifier(
       locator(),
     ),
@@ -115,6 +125,7 @@ void init() {
 
   locator.registerLazySingleton(() => GetTvSeriesMovies(locator()));
   locator.registerLazySingleton(() => GetTvPopularMovies(locator()));
+  locator.registerLazySingleton(() => GetTvTopRatedMovies(locator()));
   locator.registerLazySingleton(() => GetTvMovieDetail(locator()));
   locator.registerLazySingleton(() => SaveTvWatchlist(locator()));
   locator.registerLazySingleton(() => GetWatchlistTvMovies(locator()));

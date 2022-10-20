@@ -8,6 +8,8 @@ import 'package:ditonton/domain/usecases/get_tv_popular_movies.dart';
 import 'package:ditonton/domain/usecases/get_tv_series_movies.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/usecases/get_tv_top_rated_movies.dart';
+
 class MovieListNotifier extends ChangeNotifier {
   var _nowPlayingMovies = <Movie>[];
   List<Movie> get nowPlayingMovies => _nowPlayingMovies;
@@ -39,22 +41,30 @@ class MovieListNotifier extends ChangeNotifier {
   RequestState _tvSeriesPopularMoviesState = RequestState.Empty;
   RequestState get tvSeriesPopularMoviesState => _tvSeriesPopularMoviesState;
 
+  var _tvSeriesTopRatedMovies = <TvSeries>[];
+  List<TvSeries> get tvSeriesTopRatedMovies => _tvSeriesTopRatedMovies;
+
+  RequestState _tvSeriesTopRatedMoviesState = RequestState.Empty;
+  RequestState get tvSeriesTopRatedMoviesState => _tvSeriesTopRatedMoviesState;
+
   String _message = '';
   String get message => _message;
 
-  MovieListNotifier(
-      {required this.getNowPlayingMovies,
-      required this.getPopularMovies,
-      required this.getTopRatedMovies,
-      required this.getTvSeriesMovies,
-      required this.getTvPopularMovies});
+  MovieListNotifier({
+    required this.getNowPlayingMovies,
+    required this.getPopularMovies,
+    required this.getTopRatedMovies,
+    required this.getTvSeriesMovies,
+    required this.getTvPopularMovies,
+    required this.getTvTopRatedMovies,
+  });
 
   final GetNowPlayingMovies getNowPlayingMovies;
   final GetPopularMovies getPopularMovies;
   final GetTopRatedMovies getTopRatedMovies;
   final GetTvSeriesMovies getTvSeriesMovies;
   final GetTvPopularMovies getTvPopularMovies;
-
+  final GetTvTopRatedMovies getTvTopRatedMovies;
   Future<void> fetchTvSeriesMovies() async {
     _tvSeriesMoviesState = RequestState.Loading;
     notifyListeners();
@@ -88,6 +98,25 @@ class MovieListNotifier extends ChangeNotifier {
       (moviesData) {
         _tvSeriesPopularMoviesState = RequestState.Loaded;
         _tvSeriesPopularMovies = moviesData;
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> fetchTvTopRatedMovies() async {
+    _tvSeriesTopRatedMoviesState = RequestState.Loading;
+    notifyListeners();
+
+    final result = await getTvTopRatedMovies.execute();
+    result.fold(
+      (failure) {
+        _tvSeriesTopRatedMoviesState = RequestState.Error;
+        _message = failure.message;
+        notifyListeners();
+      },
+      (moviesData) {
+        _tvSeriesTopRatedMoviesState = RequestState.Loaded;
+        _tvSeriesTopRatedMovies = moviesData;
         notifyListeners();
       },
     );
