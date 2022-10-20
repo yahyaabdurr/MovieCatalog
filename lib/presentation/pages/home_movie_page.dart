@@ -10,6 +10,7 @@ import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/pages/tv_popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/tv_series_movies_page.dart';
+import 'package:ditonton/presentation/pages/tv_top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/common/state_enum.dart';
@@ -31,6 +32,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
           ..fetchPopularMovies()
           ..fetchTvSeriesMovies()
           ..fetchTvPopularMovies()
+          ..fetchTvTopRatedMovies()
           ..fetchTopRatedMovies());
   }
 
@@ -118,6 +120,23 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   );
                 } else if (state == RequestState.Loaded) {
                   return TvSeriesList(data.tvSeriesPopularMovies);
+                } else {
+                  return Text('Failed');
+                }
+              }),
+              _buildSubHeading(
+                title: 'TV Series - Top Rated',
+                onTap: () => Navigator.pushNamed(
+                    context, TvTopRatedMoviesPage.ROUTE_NAME),
+              ),
+              Consumer<MovieListNotifier>(builder: (context, data, child) {
+                final state = data.tvSeriesTopRatedMoviesState;
+                if (state == RequestState.Loading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state == RequestState.Loaded) {
+                  return TvSeriesList(data.tvSeriesTopRatedMovies);
                 } else {
                   return Text('Failed');
                 }
