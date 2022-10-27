@@ -1,5 +1,6 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
+import 'package:ditonton/presentation/bloc/search_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
@@ -22,12 +23,17 @@ import 'package:ditonton/presentation/provider/tv_top_rated_movies_notifier.dart
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
+import 'package:http/http.dart' as http;
 
+import 'common/helper.dart';
 import 'presentation/provider/tv_series_movies_notifier.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HttpSSLPinning.init();
   di.init();
   runApp(MyApp());
 }
@@ -38,10 +44,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
+          create: (_) => di.locator<MovieDetailNotifier>(),
         ),
         ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
+          create: (_) => di.locator<MovieListNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvDetailNotifier>(),
@@ -66,6 +72,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<SearchBloc>(),
         ),
       ],
       child: MaterialApp(
@@ -123,5 +132,15 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class HttpSSLPinning {
+  static Future<http.Client> get _instance async =>
+      _clientInstance ??= await Shared.createLEClient();
+  static http.Client? _clientInstance;
+  static http.Client get client => _clientInstance ?? http.Client();
+  static Future<void> init() async {
+    _clientInstance = await _instance;
   }
 }

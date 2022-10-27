@@ -7,6 +7,7 @@ import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/data/models/tv_series_detail_model.dart';
 import 'package:ditonton/data/models/tv_series_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 import '../models/tv_series_response.dart';
 
