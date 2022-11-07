@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">17</td>
             <td class="headerCovTableEntry">32</td>
-            <td class="headerCovTableEntryLo">53.1 %</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-10-05 15:52:40</td>
+            <td class="headerValue">2022-10-28 10:48:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -78,13 +78,13 @@
 <a name="16"><span class="lineNum">      16 </span><span class="lineCov">          2 :   RequestState get movieState =&gt; _movieState;</span></a>
 <a name="17"><span class="lineNum">      17 </span>            : </a>
 <a name="18"><span class="lineNum">      18 </span>            :   RequestState _tvMovieState = RequestState.Empty;</a>
-<a name="19"><span class="lineNum">      19 </span><span class="lineNoCov">          0 :   RequestState get tvMovieState =&gt; _tvMovieState;</span></a>
+<a name="19"><span class="lineNum">      19 </span><span class="lineCov">          2 :   RequestState get tvMovieState =&gt; _tvMovieState;</span></a>
 <a name="20"><span class="lineNum">      20 </span>            : </a>
 <a name="21"><span class="lineNum">      21 </span>            :   List&lt;Movie&gt; _searchMoviesResult = [];</a>
 <a name="22"><span class="lineNum">      22 </span><span class="lineCov">          2 :   List&lt;Movie&gt; get searchMoviesResult =&gt; _searchMoviesResult;</span></a>
 <a name="23"><span class="lineNum">      23 </span>            : </a>
 <a name="24"><span class="lineNum">      24 </span>            :   List&lt;TvSeries&gt; _searchTvSeriesResult = [];</a>
-<a name="25"><span class="lineNum">      25 </span><span class="lineNoCov">          0 :   List&lt;TvSeries&gt; get searchTvSeriesResult =&gt; _searchTvSeriesResult;</span></a>
+<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          2 :   List&lt;TvSeries&gt; get searchTvSeriesResult =&gt; _searchTvSeriesResult;</span></a>
 <a name="26"><span class="lineNum">      26 </span>            : </a>
 <a name="27"><span class="lineNum">      27 </span>            :   String _message = '';</a>
 <a name="28"><span class="lineNum">      28 </span><span class="lineCov">          2 :   String get message =&gt; _message;</span></a>
@@ -108,21 +108,21 @@
 <a name="46"><span class="lineNum">      46 </span>            :     );</a>
 <a name="47"><span class="lineNum">      47 </span>            :   }</a>
 <a name="48"><span class="lineNum">      48 </span>            : </a>
-<a name="49"><span class="lineNum">      49 </span><span class="lineNoCov">          0 :   Future&lt;void&gt; fetchTvMovieSearch(String query) async {</span></a>
-<a name="50"><span class="lineNum">      50 </span><span class="lineNoCov">          0 :     _tvMovieState = RequestState.Loading;</span></a>
-<a name="51"><span class="lineNum">      51 </span><span class="lineNoCov">          0 :     notifyListeners();</span></a>
+<a name="49"><span class="lineNum">      49 </span><span class="lineCov">          1 :   Future&lt;void&gt; fetchTvMovieSearch(String query) async {</span></a>
+<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          1 :     _tvMovieState = RequestState.Loading;</span></a>
+<a name="51"><span class="lineNum">      51 </span><span class="lineCov">          1 :     notifyListeners();</span></a>
 <a name="52"><span class="lineNum">      52 </span>            : </a>
-<a name="53"><span class="lineNum">      53 </span><span class="lineNoCov">          0 :     final result = await searchTvSeries.execute(query);</span></a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineNoCov">          0 :     result.fold(</span></a>
-<a name="55"><span class="lineNum">      55 </span><span class="lineNoCov">          0 :       (failure) {</span></a>
-<a name="56"><span class="lineNum">      56 </span><span class="lineNoCov">          0 :         _message = failure.message;</span></a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineNoCov">          0 :         _tvMovieState = RequestState.Error;</span></a>
-<a name="58"><span class="lineNum">      58 </span><span class="lineNoCov">          0 :         notifyListeners();</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          3 :     final result = await searchTvSeries.execute(query);</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          1 :     result.fold(</span></a>
+<a name="55"><span class="lineNum">      55 </span><span class="lineCov">          1 :       (failure) {</span></a>
+<a name="56"><span class="lineNum">      56 </span><span class="lineCov">          2 :         _message = failure.message;</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          1 :         _tvMovieState = RequestState.Error;</span></a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          1 :         notifyListeners();</span></a>
 <a name="59"><span class="lineNum">      59 </span>            :       },</a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineNoCov">          0 :       (data) {</span></a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineNoCov">          0 :         _searchTvSeriesResult = data;</span></a>
-<a name="62"><span class="lineNum">      62 </span><span class="lineNoCov">          0 :         _tvMovieState = RequestState.Loaded;</span></a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineNoCov">          0 :         notifyListeners();</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          1 :       (data) {</span></a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          1 :         _searchTvSeriesResult = data;</span></a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          1 :         _tvMovieState = RequestState.Loaded;</span></a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          1 :         notifyListeners();</span></a>
 <a name="64"><span class="lineNum">      64 </span>            :       },</a>
 <a name="65"><span class="lineNum">      65 </span>            :     );</a>
 <a name="66"><span class="lineNum">      66 </span>            :   }</a>
